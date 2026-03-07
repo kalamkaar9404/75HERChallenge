@@ -1,6 +1,48 @@
 # 🏥 Dr. NutriCare — Immutable Health Integrity
 ### #75HER Challenge | CreateHER Fest 2026
 
+---
+
+## 🚀 Live Demo
+
+| | Link |
+|---|---|
+| 🌐 **Live App** | *(add your `.vercel.app` URL here after deploying)* |
+| 📜 **Smart Contract** | [0xA3D7B89A83a6a5B6956194b510AB1b591A916920 on Amoy](https://amoy.polygonscan.com/address/0xA3D7B89A83a6a5B6956194b510AB1b591A916920) |
+| 🔗 **Deploy TX** | [0xbfde64b6… on PolygonScan](https://amoy.polygonscan.com/tx/0xbfde64b6ea1703b6cb9f09e00b36c7134fa33dd31876c0d78f4051c3314ace8b) |
+| ⚓ **First Anchor TX** | [0x4c31ad42… on PolygonScan](https://amoy.polygonscan.com/tx/0x4c31ad42cf7cf96cae3a0a9f36e2f603995333b125543a25943f781f4fc5997b) |
+| 📋 **Decision Log** | [docs/DECISION_LOG.md](./docs/DECISION_LOG.md) |
+| 🛡️ **Risk Log** | [docs/RISK_LOG.md](./docs/RISK_LOG.md) |
+| 📊 **Evidence Log** | [docs/EVIDENCE_LOG.md](./docs/EVIDENCE_LOG.md) |
+
+### ⚡ How to Use the Live App (No Setup Required)
+
+> The app works entirely in your browser. No MetaMask required for viewing.  
+> MetaMask is only needed if you want to **deploy your own contract** — the demo uses a pre-deployed admin wallet.
+
+1. Open the live URL above
+2. Navigate to **Patient Portal** (left sidebar) → click **"Anchor to Blockchain"** → watch the green shield appear
+3. Navigate to **Doctor Monitor** → select a patient → click **"Verify Record Authenticity"**
+4. Click **"🔴 Simulate Data Tamper"** → click **Verify** again → see the red alert
+5. Ask the **Maternal Health AI** chatbot: *"Is my hemoglobin normal for Week 28?"*
+6. Click any **PolygonScan** link to see the permanent on-chain record
+
+### 🦊 Optional: Connect MetaMask to Polygon Amoy
+
+If you want to interact with the contract directly:
+
+1. Open MetaMask → click **Add Network**
+2. Fill in:
+   - **Network Name:** Polygon Amoy Testnet
+   - **RPC URL:** `https://rpc-amoy.polygon.technology`
+   - **Chain ID:** `80002`
+   - **Currency Symbol:** `POL`
+   - **Block Explorer:** `https://amoy.polygonscan.com`
+3. Get free test POL at [faucet.polygon.technology](https://faucet.polygon.technology)
+4. Import the `MedicalIntegrity` contract at address `0xA3D7B89A83a6a5B6956194b510AB1b591A916920`
+
+---
+
 **One-line Value Proposition:**  
 Pregnant women and their doctors get blockchain-verified, tamper-proof medical records with AI-powered nutritional insights in under 10 seconds, with zero MetaMask popups and zero cloud infrastructure cost.
 
