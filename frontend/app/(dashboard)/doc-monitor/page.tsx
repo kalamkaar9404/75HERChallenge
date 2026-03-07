@@ -4,10 +4,14 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck } from 'lucide-react';
 import dynamic from 'next/dynamic';
+
+// Typed dynamic imports — preserves prop inference without SSR
 const PatientList   = dynamic(() => import('@/components/doc-monitor/patient-list').then(m   => ({ default: m.PatientList })),   { ssr: false });
 const MedicalGraphs = dynamic(() => import('@/components/doc-monitor/medical-graphs').then(m => ({ default: m.MedicalGraphs })), { ssr: false });
 const AlertPanel    = dynamic(() => import('@/components/doc-monitor/alert-panel').then(m    => ({ default: m.AlertPanel })),    { ssr: false });
-const ApprovalQueue = dynamic(() => import('@/components/doc-monitor/approval-queue').then(m => ({ default: m.ApprovalQueue })), { ssr: false });
+
+import { ApprovalQueue } from '@/components/doc-monitor/approval-queue';
+import { IntegrityShield } from '@/components/doc-monitor/integrity-shield';
 import { Card } from '@/components/ui/card';
 import {
   MOCK_PATIENTS,
@@ -142,6 +146,20 @@ export default function DocMonitorPage() {
             <AlertPanel alerts={patientAlerts} />
             <ApprovalQueue plans={MOCK_PENDING_PLANS} />
           </div>
+
+          {/* ── Blockchain Integrity Shield ───────────────────────── */}
+          <IntegrityShield
+            patientId={selectedPatient.id}
+            patientName={selectedPatient.name}
+            recordData={{
+              patientId:     selectedPatient.id,
+              name:          selectedPatient.name,
+              age:           selectedPatient.age,
+              pregnancyWeek: selectedPatient.pregnancyWeek,
+              riskLevel:     selectedPatient.riskLevel,
+              status:        selectedPatient.status,
+            }}
+          />
         </motion.div>
       </div>
     </motion.div>

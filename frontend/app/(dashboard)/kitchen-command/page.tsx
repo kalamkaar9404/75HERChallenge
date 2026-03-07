@@ -2,11 +2,15 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import type { ComponentProps } from 'react';
+import type { ActiveOrdersList as AOLType  } from '@/components/kitchen-command/active-orders-list';
+import type { RecipeGuide      as RGType   } from '@/components/kitchen-command/recipe-guide';
+import type { ChefChatbot      as CCType   } from '@/components/kitchen-command/chef-chatbot';
 import { motion } from 'framer-motion';
 import { ChefHat, Flame } from 'lucide-react';
-const ActiveOrdersList = dynamic(() => import('@/components/kitchen-command/active-orders-list').then(m => ({ default: m.ActiveOrdersList })), { ssr: false });
-const RecipeGuide      = dynamic(() => import('@/components/kitchen-command/recipe-guide').then(m      => ({ default: m.RecipeGuide })),      { ssr: false });
-const ChefChatbot      = dynamic(() => import('@/components/kitchen-command/chef-chatbot').then(m      => ({ default: m.ChefChatbot })),      { ssr: false });
+const ActiveOrdersList = dynamic<ComponentProps<typeof AOLType>> (() => import('@/components/kitchen-command/active-orders-list').then(m => ({ default: m.ActiveOrdersList })), { ssr: false });
+const RecipeGuide      = dynamic<ComponentProps<typeof RGType>>  (() => import('@/components/kitchen-command/recipe-guide').then(m      => ({ default: m.RecipeGuide })),      { ssr: false });
+const ChefChatbot      = dynamic<ComponentProps<typeof CCType>>  (() => import('@/components/kitchen-command/chef-chatbot').then(m      => ({ default: m.ChefChatbot })),      { ssr: false });
 import { Card } from '@/components/ui/card';
 import {
   MOCK_MEAL_ORDERS,

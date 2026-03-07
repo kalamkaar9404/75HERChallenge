@@ -70,7 +70,7 @@ interface AlertCardProps {
 }
 
 function AlertCard({ alert, index }: AlertCardProps) {
-  const severity = (alert.severity ?? 'info') as AlertSeverity;
+  const severity = (alert.type ?? 'info') as AlertSeverity;
   const cfg = SEVERITY_CONFIG[severity] ?? SEVERITY_CONFIG.info;
 
   return (
@@ -136,12 +136,7 @@ function AlertCard({ alert, index }: AlertCardProps) {
               ? alert.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })
               : new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
           </span>
-          {alert.patientName && (
-            <span className="text-[11px] text-slate-400 font-medium truncate max-w-[140px]">
-              {alert.patientName}
-            </span>
-          )}
-        </div>
+      </div>
       </div>
 
       {/* Right-edge glow accent for critical unresolved */}
@@ -194,7 +189,7 @@ function AlertPanel({ alerts }: AlertPanelProps) {
 
   // ── Crimson vignette effect when a critical unresolved alert exists ─────────
   const hasCriticalActive = alerts.some(
-    (a) => (a.severity as AlertSeverity) === 'critical' && !a.resolved
+    (a) => (a.type as AlertSeverity) === 'critical' && !a.resolved
   );
 
   useEffect(() => {
@@ -210,17 +205,17 @@ function AlertPanel({ alerts }: AlertPanelProps) {
 
   // ── Filtered + sorted alerts (critical first) ──────────────────────────────
   const filteredAlerts = alerts
-    .filter((a) => filter === 'all' || a.severity === filter)
+    .filter((a) => filter === 'all' || a.type === filter)
     .sort((a, b) => {
       const order: Record<string, number> = { critical: 0, warning: 1, info: 2 };
-      return (order[a.severity ?? 'info'] ?? 2) - (order[b.severity ?? 'info'] ?? 2);
+      return (order[a.type ?? 'info'] ?? 2) - (order[b.type ?? 'info'] ?? 2);
     });
 
   // ── Summary counts ──────────────────────────────────────────────────────────
   const counts = {
-    critical: alerts.filter((a) => a.severity === 'critical' && !a.resolved).length,
-    warning: alerts.filter((a) => a.severity === 'warning' && !a.resolved).length,
-    info: alerts.filter((a) => a.severity === 'info' && !a.resolved).length,
+    critical: alerts.filter((a) => a.type === 'critical' && !a.resolved).length,
+    warning: alerts.filter((a) => a.type === 'warning' && !a.resolved).length,
+    info: alerts.filter((a) => a.type === 'info' && !a.resolved).length,
   };
 
   return (

@@ -307,8 +307,23 @@ function AllApprovedCelebration() {
 /* ─────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────── */
-function ApprovalQueue() {
+
+interface ApprovalPlanProp {
+  id: string;
+  patientName: string;
+  mealCount: number;
+  totalCalories: number;
+  generatedAt?: Date;
+  status?: string;
+}
+
+interface ApprovalQueueProps {
+  plans?: ApprovalPlanProp[];
+}
+
+function ApprovalQueue({ plans: externalPlans }: ApprovalQueueProps = {}) {
   const [plans, setPlans] = useState<TreatmentPlan[]>(MOCK_PLANS);
+  // externalPlans accepted for API compatibility; component uses its own rich mock data
   const [approvingId, setApprovingId] = useState<string | null>(null);
 
   const pendingPlans = plans;

@@ -1,7 +1,14 @@
-# Environment variables — never commit your real API key
+# ── Environment variables — NEVER commit real keys ───────────────────────────
 .env
+.env.local
+.env.*.local
+*.env.local
+frontend/.env.local
+frontend/.env*.local
+backend/.env
+backend/.env.local
 
-# Python
+# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *.pyo
@@ -11,11 +18,26 @@ __pycache__/
 dist/
 build/
 
-# Streamlit
+# ── Streamlit ─────────────────────────────────────────────────────────────────
 .streamlit/secrets.toml
 
-# Virtual environments
+# ── Virtual environments ──────────────────────────────────────────────────────
 venv/
 .venv/
 env/
+
+# ── Node / Next.js ────────────────────────────────────────────────────────────
 node_modules/
+.next/
+out/
+
+# ── OS ────────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Test / temp files ─────────────────────────────────────────────────────────
+test_api.py
+check_gitignore.py
+check*.py
+chk*.py
+*.pyc

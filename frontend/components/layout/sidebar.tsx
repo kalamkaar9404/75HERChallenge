@@ -102,7 +102,7 @@ export default function Sidebar() {
         {NAV_ITEMS.map(({ label, href, icon: Icon }) => {
           const isActive =
             pathname === href ||
-            (href !== '/' && pathname?.startsWith(href));
+            pathname?.startsWith(href as string);
 
           return (
             <Link key={href} href={href} className="block">

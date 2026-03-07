@@ -1,16 +1,19 @@
 {
-  "name": "mednutri",
-  "version": "2.0.0",
-  "description": "MedNutri — AI-powered clinical nutrition platform (Next.js + Streamlit)",
+  "name": "mednutri-root",
+  "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "concurrently --names \"NEXT,STREAMLIT\" --prefix-colors \"cyan,magenta\" --kill-others-on-fail \"npm run frontend\" \"npm run backend\"",
-    "frontend": "cd frontend && npm run dev",
-    "backend": "cd backend && streamlit run app.py --server.port 8501",
-    "install:frontend": "cd frontend && npm install",
-    "setup": "npm run install:frontend"
+    "compile": "npx hardhat compile",
+    "deploy":  "npx hardhat run scripts/deploy.mjs --network amoy",
+    "anchor":  "npx hardhat run scripts/anchorMockPatient.mjs --network amoy"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "ethers": "^6.0.0",
+    "hardhat": "^3.1.11"
   }
 }

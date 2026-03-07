@@ -1,15 +1,22 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Leaf, Activity } from 'lucide-react';
-import dynamic from 'next/dynamic';
-import { VitalsOverview } from '@/components/patient-portal/vitals-overview';
-import { AIMealPlan } from '@/components/patient-portal/ai-meal-plan';
-const NutritionistChat = dynamic(
-  () => import('@/components/patient-portal/nutritionist-chat').then(m => ({ default: m.NutritionistChat })),
-  { ssr: false }
-);
-import { NutritionDonut } from '@/components/patient-portal/nutrition-donut';
+import { useState }          from 'react';
+import { motion }            from 'framer-motion';
+import { Leaf, Activity, ShieldCheck, FileText, Sparkles } from 'lucide-react';
+import dynamic               from 'next/dynamic';
+import type { ComponentProps } from 'react';
+
+import { VitalsOverview }    from '@/components/patient-portal/vitals-overview';
+import { AIMealPlan }        from '@/components/patient-portal/ai-meal-plan';
+import { MedicalNER }        from '@/components/patient-portal/medical-ner';
+import { NutritionDonut }    from '@/components/patient-portal/nutrition-donut';
+import { DocumentVault }     from '@/components/patient-portal/document-vault';
+import { MaternalTimeline }  from '@/components/patient-portal/maternal-timeline';
+import { MaternalChatbot }   from '@/components/patient-portal/maternal-chatbot';
+import { BlockchainBadge }   from '@/components/patient-portal/blockchain-badge';
+import type { VaultDocument } from '@/components/patient-portal/document-vault';
+import type { NutritionistChat as NCType } from '@/components/patient-portal/nutritionist-chat';
+
 import {
   MOCK_PATIENTS,
   MOCK_VITALS,
@@ -18,8 +25,32 @@ import {
 } from '@/lib/mock-data';
 import { staggerContainerVariants, slideUpVariants } from '@/lib/luxury-animations';
 
+const NutritionistChat = dynamic<ComponentProps<typeof NCType>>(
+  () => import('@/components/patient-portal/nutritionist-chat').then(m => ({ default: m.NutritionistChat })),
+  { ssr: false }
+);
+
 export default function PatientPortalPage() {
   const patient = MOCK_PATIENTS[0];
+
+  // Shared document state — passed down to DocumentVault & up to Timeline + Chatbot
+  const [documents, setDocuments] = useState<VaultDocument[]>([]);
+
+  // Build patient context for the AI chatbot
+  const patientContext = {
+    name:          patient.name,
+    pregnancyWeek: patient.pregnancyWeek,
+    vitals: {
+      hemoglobin:    '11.2 g/dL',
+      bloodPressure: `${MOCK_VITALS.bloodPressureSys}/${MOCK_VITALS.bloodPressureDia} mmHg`,
+      bloodGlucose:  `${MOCK_VITALS.bloodGlucose} mmol/L`,
+      weight:        `${MOCK_VITALS.weight} kg`,
+    },
+    verifiedDocuments: documents
+      .filter(d => d.status === 'verified')
+      .map(d => ({ fileName: d.fileName, anchoredAt: d.anchoredAt, txHash: d.txHash })),
+    anchored: documents.some(d => d.status === 'verified'),
+  };
 
   return (
     <motion.div
@@ -28,13 +59,33 @@ export default function PatientPortalPage() {
       initial="hidden"
       animate="show"
     >
-      {/* ── Header ─────────────────────────────────────────────────────── */}
+      {/* ── Header ──────────────────────────────────────────────────── */}
       <motion.div variants={slideUpVariants} className="space-y-4 pb-4 border-b border-white/20">
-        <h1 className="text-4xl font-bold gradient-text-nurture">Patient Portal</h1>
-        <p className="text-muted-foreground">
-          Welcome, <span className="font-semibold text-[#6B8E6F]">{patient.name}</span>
-          {' '}· Week {patient.pregnancyWeek} of pregnancy
-        </p>
+        <div className="flex items-start justify-between flex-wrap gap-3">
+          <div>
+            <h1 className="text-4xl font-bold gradient-text-nurture">Patient Portal</h1>
+            <p className="text-muted-foreground mt-1">
+              Welcome, <span className="font-semibold text-[#6B8E6F]">{patient.name}</span>
+              {' '}· Week {patient.pregnancyWeek} of pregnancy
+            </p>
+          </div>
+          {/* Blockchain status in header */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {documents.length > 0 ? (
+              <BlockchainBadge
+                status={documents.every(d => d.status === 'verified') ? 'verified' : 'tampered'}
+                txHash={documents[0]?.txHash}
+                anchoredAt={documents[0]?.anchoredAt}
+              />
+            ) : (
+              <span className="text-xs text-muted-foreground bg-slate-100 px-3 py-1 rounded-full flex items-center gap-1.5">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                No documents anchored yet
+              </span>
+            )}
+          </div>
+        </div>
+
         <div className="flex flex-wrap items-center gap-3">
           <span className="px-4 py-1.5 rounded-full text-sm font-semibold bg-[#6B8E6F]/10 text-[#6B8E6F] border border-[#6B8E6F]/25">
             Health Status: Excellent
@@ -43,40 +94,25 @@ export default function PatientPortalPage() {
             <span className="h-2 w-2 rounded-full bg-[#20B2AA] animate-pulse" />
             Real-time Monitoring Active
           </span>
+          <span className="px-4 py-1.5 rounded-full text-sm font-semibold bg-purple-50 text-purple-600 border border-purple-200 flex items-center gap-2">
+            <Sparkles className="h-3.5 w-3.5" />
+            Polygon Amoy · Contract: 0xA3D7B8…
+          </span>
         </div>
       </motion.div>
 
-      {/* ── Themed Hero: Farm-to-Table ────────────────────────────────── */}
+      {/* ── Hero Banner ─────────────────────────────────────────────── */}
       <motion.div variants={slideUpVariants}>
-        <div className="relative w-full h-52 md:h-64 rounded-3xl overflow-hidden glass-silk">
-          {/* Layered gradient simulating fresh organic produce */}
+        <div className="relative w-full h-40 md:h-52 rounded-3xl overflow-hidden glass-silk">
           <div className="absolute inset-0 bg-gradient-to-br from-[#6B8E6F]/30 via-[#9CAF88]/20 to-[#E8B4A0]/25" />
           <div className="absolute inset-0"
             style={{
               backgroundImage: `
                 radial-gradient(circle at 20% 50%, rgba(107,142,111,0.35) 0%, transparent 50%),
                 radial-gradient(circle at 80% 30%, rgba(32,178,170,0.25) 0%, transparent 45%),
-                radial-gradient(circle at 60% 80%, rgba(232,180,160,0.30) 0%, transparent 40%)
-              `,
+                radial-gradient(circle at 60% 80%, rgba(232,180,160,0.30) 0%, transparent 40%)`,
             }}
           />
-
-          {/* Decorative leaf dots */}
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-[#6B8E6F]/15"
-              style={{
-                width: `${40 + i * 18}px`,
-                height: `${40 + i * 18}px`,
-                left: `${8 + i * 15}%`,
-                top: `${20 + (i % 3) * 20}%`,
-              }}
-              animate={{ y: [0, -8, 0], scale: [1, 1.05, 1] }}
-              transition={{ duration: 3 + i * 0.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.3 }}
-            />
-          ))}
-
           <div className="absolute inset-0 flex items-end p-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
@@ -84,27 +120,56 @@ export default function PatientPortalPage() {
                   <Leaf className="h-4 w-4 text-[#6B8E6F]" />
                 </div>
                 <span className="text-xs font-bold uppercase tracking-wider text-[#6B8E6F] bg-white/60 backdrop-blur-sm px-3 py-1 rounded-full">
-                  Farm-to-Table Nutrition
+                  Immutable Health Shield · Polygon Amoy
                 </span>
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-1">
-                Your Personalized Health Journey
-              </h2>
-              <p className="text-sm text-slate-600/90 max-w-lg">
-                Organic, locally sourced meal plans crafted for maternal wellness — from soil to your table.
+              <h2 className="text-2xl font-bold text-slate-800">Your Blockchain-Protected Health Journey</h2>
+              <p className="text-sm text-slate-600/90 max-w-lg mt-1">
+                Every document you upload is SHA-256 hashed and anchored permanently on Polygon Amoy — tamper-proof and verifiable.
               </p>
             </div>
           </div>
         </div>
       </motion.div>
 
-      {/* ── 3-Column Grid ────────────────────────────────────────────── */}
+      {/* ── Main 3-column grid ───────────────────────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-max">
-        <motion.div variants={slideUpVariants} className="lg:col-span-1">
+
+        {/* ── Column 1: Vitals + Document Vault ───────────────────── */}
+        <motion.div variants={slideUpVariants} className="lg:col-span-1 space-y-4">
           <VitalsOverview vitals={MOCK_VITALS} pregnancyWeek={patient.pregnancyWeek} />
+
+          {/* Document Vault */}
+          <div className="glass-silk rounded-2xl border-white/30 p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center"
+                style={{ background: 'linear-gradient(135deg,#10B98120,#6B8E6F20)' }}>
+                <ShieldCheck className="h-4 w-4 text-[#10B981]" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-foreground">Secure Document Vault</h3>
+                <p className="text-xs text-muted-foreground">SHA-256 anchored to Polygon Amoy</p>
+              </div>
+            </div>
+            <DocumentVault
+              patientId={patient.id ?? 'p1'}
+              documents={documents}
+              setDocuments={setDocuments}
+            />
+          </div>
         </motion.div>
 
-        <motion.div variants={slideUpVariants} className="lg:col-span-1 space-y-6">
+        {/* ── Column 2: Timeline + Meal Plan ──────────────────────── */}
+        <motion.div variants={slideUpVariants} className="lg:col-span-1 space-y-4">
+
+          {/* Maternal Timeline */}
+          <div className="glass-silk rounded-2xl border-white/30 p-4">
+            <MaternalTimeline
+              pregnancyWeek={patient.pregnancyWeek}
+              documents={documents}
+            />
+          </div>
+
           <AIMealPlan
             meals={MOCK_AI_MEAL_PLAN.meals}
             totalCalories={MOCK_AI_MEAL_PLAN.totalCalories}
@@ -113,9 +178,15 @@ export default function PatientPortalPage() {
           <NutritionDonut carbs={280} protein={85} fats={65} fiber={35} />
         </motion.div>
 
-        <motion.div variants={slideUpVariants} className="lg:col-span-1">
-          <NutritionistChat initialMessages={MOCK_NUTRITIONIST_MESSAGES} />
+        {/* ── Column 3: AI Chatbot + NER ───────────────────────────── */}
+        <motion.div variants={slideUpVariants} className="lg:col-span-1 space-y-4">
+
+          {/* Maternal AI Chatbot */}
+          <MaternalChatbot patientContext={patientContext} />
+
+          <MedicalNER />
         </motion.div>
+
       </div>
     </motion.div>
   );

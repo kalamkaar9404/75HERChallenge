@@ -234,7 +234,7 @@ function VitalsOverview({ vitals, pregnancyWeek }: VitalsOverviewProps) {
     {
       id: 'bp',
       label: 'Blood Pressure',
-      value: vitals.bloodPressure ?? '128/82',
+      value: `${vitals.bloodPressureSys}/${vitals.bloodPressureDia}`,
       unit: 'mmHg',
       icon: <Zap className="w-4 h-4 text-[#F59E0B]" />,
       status: 'attention',

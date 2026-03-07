@@ -55,8 +55,9 @@ export async function POST(request: NextRequest) {
       baseURL: 'https://openrouter.ai/api/v1',
     });
 
+    const model = process.env.OPENROUTER_MODEL ?? 'openai/gpt-4o';
     const completion = await client.chat.completions.create({
-      model: 'openai/gpt-4o',
+      model,
       messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
       temperature: 0.5,
       max_tokens: 1500,

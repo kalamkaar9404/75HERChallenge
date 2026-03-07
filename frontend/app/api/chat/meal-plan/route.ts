@@ -35,8 +35,10 @@ export async function POST(request: NextRequest) {
       baseURL: 'https://openrouter.ai/api/v1',
     });
 
+    // Use GPT-4o if available; fall back to free Llama model if credits are zero
+    const model = process.env.OPENROUTER_MODEL ?? 'openai/gpt-4o';
     const completion = await client.chat.completions.create({
-      model: 'openai/gpt-4o',
+      model,
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
         { role: 'user', content: `Generate a meal plan for: ${patientInfo}` },
