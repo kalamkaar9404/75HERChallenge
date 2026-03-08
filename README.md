@@ -1,13 +1,17 @@
-# 🏥 Dr. NutriCare — Immutable Health Integrity
+# Dr. NutriCare — Immutable Health Integrity
 ### #75HER Challenge | CreateHER Fest 2026
 
 ---
-
-## 🚀 Live Demo
+## 4 Line Problem Frame
+For pregnant women and chronic illness patients navigating fragmented healthcare systems,
+Who struggle with lost medical history, disorganized physical reports, and unverified data transfers,
+Dr. NutriCare is a decentralized medical locker and SHA-256 integrity layer
+That creates a portable, tamper-proof timeline of health records to ensure seamless and trusted clinical transitions.
+##  Live Demo
 
 | | Link |
 |---|---|
-| 🌐 **Live App** | *(add your `.vercel.app` URL here after deploying)* |
+| 🌐 **Live App** | https://75-her-challenge-lt72.vercel.app/overview |
 | 📜 **Smart Contract** | [0xA3D7B89A83a6a5B6956194b510AB1b591A916920 on Amoy](https://amoy.polygonscan.com/address/0xA3D7B89A83a6a5B6956194b510AB1b591A916920) |
 | 🔗 **Deploy TX** | [0xbfde64b6… on PolygonScan](https://amoy.polygonscan.com/tx/0xbfde64b6ea1703b6cb9f09e00b36c7134fa33dd31876c0d78f4051c3314ace8b) |
 | ⚓ **First Anchor TX** | [0x4c31ad42… on PolygonScan](https://amoy.polygonscan.com/tx/0x4c31ad42cf7cf96cae3a0a9f36e2f603995333b125543a25943f781f4fc5997b) |
