@@ -1,12 +1,12 @@
-# Dr. NutriCare — Immutable Health Integrity
+# NutriCare — Immutable Health Integrity
 ### #75HER Challenge | CreateHER Fest 2026
 
 ---
 ## 4 Line Problem Frame
-For pregnant women and chronic illness patients navigating fragmented healthcare systems,
-Who struggle with lost medical history, disorganized physical reports, and unverified data transfers,
-Dr. NutriCare is a decentralized medical locker and SHA-256 integrity layer
-That creates a portable, tamper-proof timeline of health records to ensure seamless and trusted clinical transitions.
+> **For** pregnant women and chronic illness patients navigating fragmented healthcare systems,  
+> **Who** struggle with lost medical history, disorganized physical reports, and unverified data transfers,  
+> **Dr. NutriCare is** a decentralized medical locker and SHA-256 integrity layer  
+> **That** creates a portable, tamper-proof timeline of health records to ensure seamless and trusted clinical transitions.
 ##  Live Demo
 
 | | Link |
