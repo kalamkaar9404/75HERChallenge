@@ -330,7 +330,6 @@ cd frontend && npm run build    # Production build
 | Solidity 0.8.20 | GPL-3.0 | [soliditylang.org](https://soliditylang.org) |
 | OpenRouter API | Commercial ToS | [openrouter.ai](https://openrouter.ai) |
 | Polygon Amoy Testnet | Public Infrastructure | [polygon.technology](https://polygon.technology) |
-| Hero images (`pregnancy-wellness-hero.jpg`, etc.) | Demo-only placeholders | Replace with licensed assets before production |
 
 ---
 
