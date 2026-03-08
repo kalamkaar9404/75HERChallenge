@@ -93,9 +93,13 @@ export async function POST(request: NextRequest) {
     }
 
     const client = new OpenAI({
-      apiKey,
-      baseURL: 'https://openrouter.ai/api/v1',
-    });
+  apiKey,
+  baseURL: 'https://api.router.tetrate.ai/v1',
+  defaultHeaders: {
+    "HTTP-Referer": "http://localhost:3000", // Required for free models
+    "X-Title": "Maternal Health App",       // Helps Tetrate identify the app
+  }
+});
 
     const completion = await client.chat.completions.create({
       model: 'google/gemini-2.0-flash-exp:free',
