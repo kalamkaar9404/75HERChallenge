@@ -6,20 +6,17 @@
 > **For** pregnant women and chronic illness patients navigating fragmented healthcare systems,  
 > **Who** struggle with lost medical history, disorganized physical reports, and unverified data transfers,  
 > **Dr. NutriCare is** a decentralized medical locker and SHA-256 integrity layer  
-> **That** creates a portable, tamper-proof timeline of health records to ensure seamless and trusted clinical transitions.
+> **That** creates a portable, tamper-proof timeline of health records to ensure seamless and trusted clinical transitions and gives important helpful insights from stored data.
 ##  Live Demo
 
 | | Link |
 |---|---|
-| 🌐 **Live App** | https://75-her-challenge-lt72.vercel.app/overview |
-| 📜 **Smart Contract** | [0xA3D7B89A83a6a5B6956194b510AB1b591A916920 on Amoy](https://amoy.polygonscan.com/address/0xA3D7B89A83a6a5B6956194b510AB1b591A916920) |
-| 🔗 **Deploy TX** | [0xbfde64b6… on PolygonScan](https://amoy.polygonscan.com/tx/0xbfde64b6ea1703b6cb9f09e00b36c7134fa33dd31876c0d78f4051c3314ace8b) |
-| ⚓ **First Anchor TX** | [0x4c31ad42… on PolygonScan](https://amoy.polygonscan.com/tx/0x4c31ad42cf7cf96cae3a0a9f36e2f603995333b125543a25943f781f4fc5997b) |
+|  **Live App** | https://75-her-challenge-lt72.vercel.app/overview |
 | 📋 **Decision Log** | [docs/DECISION_LOG.md](./docs/DECISION_LOG.md) |
 | 🛡️ **Risk Log** | [docs/RISK_LOG.md](./docs/RISK_LOG.md) |
 | 📊 **Evidence Log** | [docs/EVIDENCE_LOG.md](./docs/EVIDENCE_LOG.md) |
 
-### ⚡ How to Use the Live App (No Setup Required)
+### How to Use the Live App
 
 > The app works entirely in your browser. No MetaMask required for viewing.  
 > MetaMask is only needed if you want to **deploy your own contract** — the demo uses a pre-deployed admin wallet.
@@ -52,7 +49,7 @@ Pregnant women and their doctors get blockchain-verified, tamper-proof medical r
 
 ---
 
-## 🎯 Problem Statement
+## Problem Statement
 
 **Who:** Pregnant women in under-resourced healthcare settings, NGO health workers, and clinical doctors managing maternal health records across multiple facilities.
 
@@ -62,21 +59,21 @@ Pregnant women and their doctors get blockchain-verified, tamper-proof medical r
 
 ---
 
-## ✨ Solution Overview
+##  Solution Overview
 
-**What we built:** Dr. NutriCare is a full-stack maternal health dashboard that combines AI-powered nutrition planning with blockchain-backed document integrity. Every patient record and uploaded medical document is SHA-256 hashed and permanently anchored to the Polygon Amoy blockchain. The system provides instant visual feedback — a green "Blockchain Verified" shield or a red "Data Tampering Detected" alert — and a Gemini-powered AI assistant that explicitly states it is analyzing blockchain-verified records before answering any health question.
+**What we built:**  NutriCare is a full-stack maternal health dashboard that combines AI-powered nutrition planning with blockchain-backed document integrity. Every patient record and uploaded medical document is SHA-256 hashed and permanently anchored to the Polygon Amoy blockchain. The system provides instant visual feedback — a green "Blockchain Verified" shield or a red "Data Tampering Detected" alert — and a Gemini-powered AI assistant that explicitly states it is analyzing blockchain-verified records before answering any health question.
 
 **Key Features:**
 
-- **🔐 Immutable Health Shield:** When a document is uploaded or a patient record is saved, the browser computes a SHA-256 fingerprint using the native Web Crypto API. The hash is anchored silently to `MedicalIntegrity.sol` on Polygon Amoy. A green shield badge with a hover tooltip showing the exact timestamp and truncated TX hash appears next to every verified document.
+- ** Immutable Health Shield:** When a document is uploaded or a patient record is saved, the browser computes a SHA-256 fingerprint using the native Web Crypto API. The hash is anchored silently to `MedicalIntegrity.sol` on Polygon Amoy. A green shield badge with a hover tooltip showing the exact timestamp and truncated TX hash appears next to every verified document.
 
-- **🚨 Tamper Detection:** The "Verify Authenticity" button re-hashes the current file and compares it against the immutable on-chain record. A single changed byte triggers a red `🔴 DATA TAMPERING DETECTED` alert — proving that even a direct database edit is instantly caught.
+- ** Tamper Detection:** The "Verify Authenticity" button re-hashes the current file and compares it against the immutable on-chain record. A single changed byte triggers a red `🔴 DATA TAMPERING DETECTED` alert — proving that even a direct database edit is instantly caught.
 
-- **🤖 Maternal Health AI (Gemini 2.0 Flash):** A context-aware AI chatbot powered by `google/gemini-2.0-flash-exp:free` via OpenRouter. It receives the patient's verified vitals, pregnancy week, and anchored document list as context and always prefaces answers with *"🔐 I am analyzing your blockchain-verified records to provide this insight."*
+- **Maternal Health AI:** A context-aware AI chatbot powered by `google/gemini-2.0-flash-exp:free` via OpenRouter. It receives the patient's verified vitals, pregnancy week so that the medical docs can be used for relevant insights"*
 
 ---
 
-## 🚀 Quick Start & Demo Path
+##  Quick Start & Demo Path
 
 ### Requirements
 - Node.js 22+
@@ -127,26 +124,23 @@ Access: Open **http://localhost:3000** in your browser.
 
 ---
 
-### ⏱ 60-Second Demo Path
+### Demo Path
 
-**Step 1:** Navigate to **Patient Portal** → Locate the **🔐 Secure Document Vault** panel → Drag & drop any PDF or image file → Select **"Lab Report"** → Click **"Anchor to Blockchain"**  
+**Step 1:** Navigate to **Patient Portal** → Locate the ** Secure Document Vault** panel → Drag & drop any PDF or image file → Select **"Lab Report"** → Click **"Anchor to Blockchain"**  
 → *A green "Blockchain Verified" badge appears with a live TX hash in ~5 seconds.*
 
 **Step 2:** Click the green shield badge → Hover tooltip shows timestamp and truncated TX hash → Click **"PolygonScan"** link  
 → *The live transaction appears on [amoy.polygonscan.com](https://amoy.polygonscan.com/address/0xA3D7B89A83a6a5B6956194b510AB1b591A916920) — permanent, immutable proof.*
 
 **Step 3:** In the **Maternal Health AI** sidebar → Type *"Is my hemoglobin normal for Week 28?"*  
-→ *AI responds beginning with "🔐 I am analyzing your blockchain-verified records…" with trimester-specific medical guidance.*
+→ *AI responds beginning with " I am analyzing your records…" with trimester-specific medical guidance.*
 
 **Step 4:** Click **"Verify Authenticity"** → Edit the uploaded file in any editor → Re-upload → Click **"Verify Authenticity"** again  
-→ *Red alert: "🚨 Data Tampering Detected! Hash mismatch — file may have been modified."*
-
-📹 **Demo Video:** *(recording link — add before submission)*  
-🔗 **Live Demo:** *(deployment URL — add before submission)*
+→ *Red alert: "🚨 Data Tampering Detected! Hash mismatch — file may have been modified.(Useful for insurance claims too)"*
 
 ---
 
-## 🏗️ Technical Architecture
+##  Technical Architecture
 
 ### Components
 
@@ -191,63 +185,7 @@ Browser (React 19)
 
 ---
 
-## 🎬 Hackathon Demo Guide
-
-### ⭐ Step 1 — Upload a Fake Medical Report
-
-1. Open **http://localhost:3000** → Navigate to **Patient Portal**
-2. Find the **🔐 Secure Document Vault** (left column)
-3. Drag & drop any PDF/image (e.g., a fake `lab_report.pdf`)
-4. Select document type: **Lab Report** → Click **"Anchor to Blockchain"**
-
-**What happens:** Browser computes SHA-256 → POSTs to `/api/blockchain/anchor-file` → server calls `anchorRecord()` on Polygon Amoy → green **"Document Anchored on Blockchain!"** toast + verified badge.
-
----
-
-### ⭐ Step 2 — Show the Transaction on PolygonScan
-
-1. In the vault, find the anchored document
-2. Click the **"PolygonScan"** link next to the truncated TX hash
-
-**Show judges this live transaction:**
-```
-https://amoy.polygonscan.com/tx/0xbfde64b6ea1703b6cb9f09e00b36c7134fa33dd31876c0d78f4051c3314ace8b
-```
-Block timestamp proves *when* the data was anchored. It is **permanent — no one can change it**.
-
-> **Hover** the green shield badge → tooltip shows: *"Anchored on Polygon Amoy at [Timestamp] | Transaction: 0xbfde64b6…"*
-
----
-
-### ⭐ Step 3 — Ask the AI Chatbot About the Report
-
-1. Open the **Maternal Health AI** sidebar (right column)
-2. Ask: *"Is my hemoglobin level normal for Week 28?"*
-
-**What judges see:**
-- AI explicitly states it is analyzing blockchain-verified records
-- Provides the normal Hb range for the third trimester
-- Recommends physician follow-up if values are outside range
-- Powered by **Gemini 2.0 Flash** (free tier, ~800ms response)
-
----
-
-### ⭐ Step 4 — Simulate Tampering & Show the Red Alert
-
-1. Click **"Verify Authenticity"** → ✅ toast: *"Integrity Verified — Hash matches on-chain record"*
-2. Edit the uploaded file in any text editor and re-save
-3. Click **"Verify Authenticity"** again → upload the modified file
-
-**Result:**
-```
-🚨 Data Tampering Detected!
-lab_report.pdf — Hash mismatch! File may have been modified.
-```
-Badge turns **🔴 red**. Even a 1-byte change is caught instantly.
-
----
-
-## 📋 Project Logs & Documentation
+##  Project Logs & Documentation
 
 | Log Type | Purpose | Link |
 |---|---|---|
